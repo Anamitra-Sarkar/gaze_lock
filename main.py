@@ -15,7 +15,6 @@ Controls:
     'c' - Toggle cursor control
     'd' - Toggle debug mode
     'r' - Reset smoothing filters
-    'SPACE' - Manual calibration mode
 
 Author: GAZE-LOCK Development Team
 License: MIT
@@ -330,20 +329,26 @@ class GazeLockApp:
             left_eye_ear_points, right_eye_ear_points
         )
         
+        # Move cursor
+        if self.cursor_enabled:
+            screen_x, screen_y = self.screen_mapper.map_to_screen(smooth_h, smooth_v)
+            # Verify cursor is within screen bounds before moving
+            if 0 <= screen_x < self.screen_width and 0 <= screen_y < self.screen_height:
+                pyautogui.moveTo(screen_x, screen_y)
+        
         # Detect blink for click
         if self.ear_calculator.detect_blink(self.current_ear):
             current_time = time.time()
             if current_time - self.last_blink_time > self.blink_cooldown:
                 if self.cursor_enabled:
-                    pyautogui.click()
-                    if self.debug_mode:
-                        print(f"[{APP_NAME}] CLICK!")
+                    # Get current position and verify it's within bounds before clicking
+                    current_x, current_y = pyautogui.position()
+                    if (0 <= current_x < self.screen_width and 
+                        0 <= current_y < self.screen_height):
+                        pyautogui.click()
+                        if self.debug_mode:
+                            print(f"[{APP_NAME}] CLICK at ({current_x}, {current_y})")
                 self.last_blink_time = current_time
-        
-        # Move cursor
-        if self.cursor_enabled:
-            screen_x, screen_y = self.screen_mapper.map_to_screen(smooth_h, smooth_v)
-            pyautogui.moveTo(screen_x, screen_y)
         
         # Draw visualizations
         frame = self._draw_iris_circles(frame, left_iris, right_iris)

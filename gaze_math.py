@@ -31,9 +31,14 @@ RIGHT_EYE_TOP = 386
 RIGHT_EYE_BOTTOM = 374
 
 # Left Iris landmarks (center)
+# Index 468-472 are left iris landmarks, 468 is the center
+# Source: MediaPipe Face Mesh with refine_landmarks=True
+# Reference: https://google.github.io/mediapipe/solutions/face_mesh.html#face-landmark-model
 LEFT_IRIS_CENTER = 468
 
 # Right Iris landmarks (center)
+# Index 473-477 are right iris landmarks, 473 is the center
+# Source: MediaPipe Face Mesh with refine_landmarks=True
 RIGHT_IRIS_CENTER = 473
 
 # Eye landmarks for EAR calculation (6 points per eye)
