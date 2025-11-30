@@ -1,0 +1,14 @@
+# GAZE-LOCK: Real-Time Eye Tracking & Control System
+# Python 3.10+ required
+
+# Computer Vision
+opencv-python>=4.8.0
+
+# Face Mesh and Iris Detection
+mediapipe>=0.10.0
+
+# Mouse/Cursor Control
+pyautogui>=0.9.54
+
+# Numerical Computations
+numpy>=1.24.0
